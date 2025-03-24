@@ -1,0 +1,15 @@
+name,description,query,id,parentId,isFolder
+delete_graph_model,,"MATCH (n)
+DETACH DELETE n;
+",0,,false
+create_graph_model,,"CREATE (:Music {name: ""Guitar"", type: ""String""})<-[:PLAYS]-(:Person {name: ""Thomas"", location: ""Montpellier""})-[:STUDIES_IN {since: 2022}]->(n2:University {name: ""UM"", departement: ""Polytech""})<-[:STUDIES_IN {since: 2022}]-(n0:Person {name: ""Sylvain"", location: ""Montpellier""})-[:WORKS_OUT {since: 2023}]->(:Gym {name: ""BoulderLine"", location: ""Montpellier""}),
+(n2)<-[:STUDIES_IN {since: 2022}]-(:Person {name: ""Charley"", location: ""Montpellier""})-[:PRACTICES]->(:Sport {name: ""climbing"", type: ""individual""})<-[:PRACTICES]-(n0)-[:LIKES]->(:Beer {name: ""Cherry Chouffe"", alcohol_level: 8})",1,,false
+get_person,,"MATCH (n: Person)
+RETURN n",2,,false
+get_person_and_beer_relationship,,"MATCH (n: Person)-[r: LIKES]->(b: Beer)
+RETURN n, r, b",3,,false
+get_person_and_sport_relationship,,"MATCH (n: Person)-[r: PRACTICES]->(b: Sport)
+RETURN n, r, b",4,,false
+get_person_and_sport_relationship_conditional,,"MATCH (n: Person)-[r: PRACTICES]->(b: Sport)
+WHERE n.name = ""Sylvain""
+RETURN n, r, b",5,,false
